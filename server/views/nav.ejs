@@ -1,0 +1,43 @@
+<nav class="navbar">
+  <div class="container-fluid">
+    <div class="collapse navbar-collapse">
+        <ol class="breadcrumb pull-left">
+            <li><a href="/">Home</a></li>
+            <li><a href="/">个人中心</a></li>
+            <li class="active">welcome</li>
+        </ol>
+        <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle btn-lg" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    <%= session.user %>
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="/">首页</a></li>
+                    <li><a href="#" class="signout">退出</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+  </div>
+</nav>
+<script src="js/util.js"></script>
+<script>
+    $('.signout').on('click', function () {
+        $.ajax({
+            url: 'api/signout',
+            type: 'post',
+            dataType: 'json',
+            data: {
+                uid: cookieUtil.getItem('uid')
+            },
+            success: function (res) {
+                window.location.href = 'http://localhost:3001/signin';
+                console.log(res);
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    });
+</script>

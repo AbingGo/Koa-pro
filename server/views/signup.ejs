@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>注册</title>
+	<link rel="stylesheet" href="src/css/style.css">
+</head>
+<body>
+	<div class="container">
+		<%- include("header", {type:'signin'}) %>
+		<% if(session.user){ %>
+			<%- include("nav", {type:'signin'}) %>
+		<% } %>
+		<div class="sign-main">
+			<div class="row row-centered">
+				<div class="well col-md-6 col-centered">
+					<h2>欢迎登录</h2>
+					<form:form action="/login" method="post" role="form">
+						<div class="input-group input-group-md">
+							<span class="input-group-addon"><i class="glyphicon glyphicon-user" aria-hidden="true"></i></span>
+							<input type="text" class="form-control" name="name" placeholder="请输入用户名">
+						</div>
+						<div class="input-group input-group-md">
+							<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+							<input type="password" class="form-control" name="password" placeholder="请输入密码">
+						</div>
+						<div class="input-group input-group-md">
+							<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+							<input type="password" class="form-control" name="repeatpass" placeholder="请确认密码">
+						</div>
+						<div class="input-group input-group-md " id="err-tips">
+                            <span class="help-block">用户名或密码错误</span>
+                        </div>
+						<br/>
+						<button type="submit" class="btn btn-success btn-block submit">注册</button>
+					</form:form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		$('.submit').on('click', function () {
+			$.ajax({
+				url: 'api/signup',
+				type: 'post',
+				dataType: 'json',
+				data: {
+					name: $('input[name=name]').val(),
+					password: $('input[name=password]').val(),
+					repeatpass: $('input[name=repeatpass]').val(),
+					avator: 'https://p1.ssl.qhmsg.com/dm/48_48_100/t0105d6cf9b508f72c8.jpg'
+				},
+				success: function (res) {
+					if (res.errno == 0) {
+                        window.location.href = 'http://localhost:3001';
+                    } else {
+                        $('#err-tips span').html(res.data).show();
+                    }
+				},
+				error: function (err) {
+					console.log(err);
+				}
+			});
+		});
+	</script>
+</body>
+</html>

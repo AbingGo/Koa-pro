@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Home</title>
+	<link rel="stylesheet" href="src/css/style.css">
+</head>
+<body>
+	<div class="container">
+        <%- include("header", {type:'signin'}) %>
+        <% if(session.user){ %>
+            <%- include("nav", {type:'signin'}) %>
+            <div class="jumbotron">
+                <h1 class="welcome">Welcome!</h1>
+            </div>
+        <% } %>
+        <% if(!session.user){ %>
+            <a href="/signin">欢迎注册登录^_^</a>
+        <% } %>
+	</div>
+</body>
+</html>
